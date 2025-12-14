@@ -11,14 +11,12 @@ public class OutputWriter {
             String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             for (User user : users) {
-                // Write user name and ID
+
                 writer.write(user.getUserName() + "," + user.getUserId());
                 writer.newLine();
 
-                // Get recommendations for user
                 List<String> recommendations = engine.getRecommendationsForUser(user);
 
-                // Write recommended movie titles
                 if (recommendations.isEmpty()) {
                     writer.write("No recommendations available");
                 } else {
