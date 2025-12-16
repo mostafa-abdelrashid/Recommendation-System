@@ -1,0 +1,5 @@
+# Created at 2025-12-16T22:06:53.740
+Boot Manifest-JAR contains absolute paths in classpath 'A:\Fall2025\SW\Lab\Recommendation_System\Github_project\Recommendation-System\recommendation_system\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+
