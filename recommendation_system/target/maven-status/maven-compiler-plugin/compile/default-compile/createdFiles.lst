@@ -1,0 +1,9 @@
+com\system\App.class
+com\system\User.class
+com\system\MovieValidator.class
+com\system\OutputWriter.class
+com\system\UserValidator.class
+com\system\Parsing.class
+com\system\RecommendationEngine.class
+com\system\DataValidationException.class
+com\system\Movie.class

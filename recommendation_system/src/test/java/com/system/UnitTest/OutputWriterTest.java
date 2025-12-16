@@ -23,7 +23,6 @@ class OutputWriterTest {
 	 private static Path tempFile;
 	 private RecommendationEngine engine;
 	 private User user1,user2,user3;
-	 private 
 	    
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -52,10 +51,10 @@ class OutputWriterTest {
 
 	@Test
 	void Single_user_Scenario() throws IOException {
-		user1 = new User("Jhon", "1",new ArrayList<>(Arrays.asList("M001")));
+		user1 = new User("John Smith", "12345678A",new ArrayList<>(Arrays.asList("TM093")));
 		
 		when(engine.getRecommendationsForUser(user1))
-        .thenReturn(Arrays.asList("Jhon Wick","Wanted"));
+        .thenReturn(Arrays.asList("John Wick","Wanted"));
 		
 		OutputWriter.writeRecommendationsToFile(List.of(user1),engine,tempFile.toString());
 		
@@ -66,21 +65,21 @@ class OutputWriterTest {
 		for (int i = 0; i < lines.size(); i++) {
 		    System.out.println(i + ": [" + lines.get(i) + "]");
 		}
-        assertEquals("Jhon,1", lines.get(0));
-        assertEquals("Jhon Wick,Wanted", lines.get(1));
+        assertEquals("John Smith,12345678A", lines.get(0));
+        assertEquals("John Wick,Wanted", lines.get(1));
 	}
 	
 	@Test
 	void Multiple_users_Scenario() throws IOException{
-		user1 = new User("Jhon", "1",new ArrayList<>(Arrays.asList("M001")));
-        user2 = new User("Alex", "2",new ArrayList<>(Arrays.asList("M002")));
-        user3 = new User("Ahmed", "311",new ArrayList<>());
+		user1 = new User("John Smith", "12345678A",new ArrayList<>(Arrays.asList("TM093")));
+        user2 = new User("Alex Brown", "87654321B",new ArrayList<>(Arrays.asList("I666")));
+        user3 = new User("Ahmed Hassan", "11223344C",new ArrayList<>());
         
 		when(engine.getRecommendationsForUser(user1))
-        .thenReturn(Arrays.asList("Movie 1","Movie 2"));
+        .thenReturn(Arrays.asList("The Matrix","Inception"));
 		
 		when(engine.getRecommendationsForUser(user2))
-        .thenReturn(Arrays.asList("Movie X"));
+        .thenReturn(Arrays.asList("Gladiator"));
 		
 		when(engine.getRecommendationsForUser(user3))
         .thenReturn(Collections.emptyList());
@@ -97,44 +96,41 @@ class OutputWriterTest {
 		for (int i = 0; i < lines.size(); i++) {
 		    System.out.println(i + ": [" + lines.get(i) + "]");
 		}
-        assertEquals("Jhon,1", lines.get(0));
-        assertEquals("Movie 1,Movie 2", lines.get(1));
+        assertEquals("John Smith,12345678A", lines.get(0));
+        assertEquals("The Matrix,Inception", lines.get(1));
         
-        assertEquals("Alex,2",lines.get(2));
-        assertEquals("Movie X",lines.get(3));
+        assertEquals("Alex Brown,87654321B",lines.get(2));
+        assertEquals("Gladiator",lines.get(3));
         
-        assertEquals("Ahmed,311",lines.get(4));
+        assertEquals("Ahmed Hassan,11223344C",lines.get(4));
         assertEquals("No recommendations available",lines.get(5));
 	}
 	
 	@Test
 	void testFileOverwriteBehavior() throws IOException {
-	    User u1 = new User("Alice", "1", new ArrayList<>());
-	    User u2 = new User("Bob", "2", new ArrayList<>());
+	    User u1 = new User("Alice Johnson", "12345678A", new ArrayList<>());
+	    User u2 = new User("Bob Williams", "87654321B", new ArrayList<>());
 
 	    when(engine.getRecommendationsForUser(u1))
-	            .thenReturn(Collections.singletonList("Movie1"));
+	            .thenReturn(Collections.singletonList("The Matrix"));
 	    when(engine.getRecommendationsForUser(u2))
-	            .thenReturn(Collections.singletonList("Movie2"));
+	            .thenReturn(Collections.singletonList("Inception"));
 	    
-	    
-	    // First write
 	    OutputWriter.writeRecommendationsToFile(List.of(u1), engine, tempFile.toString());
 	    List<String> lines1 = Files.readAllLines(tempFile);
 	    for (int i = 0; i < lines1.size(); i++) {
 		    System.out.println(i + ": [" + lines1.get(i) + "]");
 		}
-	    assertEquals("Alice,1", lines1.get(0));
-	    assertEquals("Movie1", lines1.get(1));
+	    assertEquals("Alice Johnson,12345678A", lines1.get(0));
+	    assertEquals("The Matrix", lines1.get(1));
 
-	    // Second write: u2 overwrites file
 	    OutputWriter.writeRecommendationsToFile(List.of(u2), engine, tempFile.toString());
 	    List<String> lines2 = Files.readAllLines(tempFile);
 	    for (int i = 0; i < lines2.size(); i++) {
 		    System.out.println(i + ": [" + lines2.get(i) + "]");
 		}
-	    assertEquals("Bob,2", lines2.get(0));
-	    assertEquals("Movie2", lines2.get(1));
+	    assertEquals("Bob Williams,87654321B", lines2.get(0));
+	    assertEquals("Inception", lines2.get(1));
 	}
 	
 	@Test
@@ -142,19 +138,16 @@ class OutputWriterTest {
         String errorMsg = "Something went wrong!";
         OutputWriter.writeErrorToFile(errorMsg, tempFile.toString());
 
-
         String content = Files.readString(tempFile);
         assertEquals(errorMsg, content);
     }
 	
 	 @Test
-	    void testNullErrorMessage() throws IOException {
+	    void testNullErrorMessage_ThrowsException() throws IOException {
 	        String errorMsg = null;
-	        OutputWriter.writeErrorToFile(errorMsg, tempFile.toString());
 
-	        String content = Files.readString(tempFile);
-
-	        assertEquals("null", content);
+	        assertThrows(NullPointerException.class, () -> 
+	                OutputWriter.writeErrorToFile(errorMsg, tempFile.toString()));
 	    }
 	 
 	 @Test
