@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.system.IntegrationTest.TopDown.TopDown_Level1_IntegrationTest" time="0.029" tests="5" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.system.BlackBoxTest.OutputWriterTest" time="0.851" tests="9" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -59,25 +59,38 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testRecommendationEngineWithMockedOutputWriter" classname="com.system.IntegrationTest.TopDown.TopDown_Level1_IntegrationTest" time="0.002">
-    <system-out><![CDATA[User John Smith likes these genres: [Action, Sci-Fi]
+  <testcase name="singleUserScenario" classname="com.system.BlackBoxTest.OutputWriterTest" time="0.716">
+    <system-out><![CDATA[Recommendations written to: C:\Users\genzoo\AppData\Local\Temp\rec_test_13735723133705110539.txt
+]]></system-out>
+    <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\genzoo\.m2\repository\net\bytebuddy\byte-buddy-agent\1.17.7\byte-buddy-agent-1.17.7.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+  </testcase>
+  <testcase name="testEmptyErrorMessage" classname="com.system.BlackBoxTest.OutputWriterTest" time="0.003">
+    <system-out><![CDATA[Error written to: C:\Users\genzoo\AppData\Local\Temp\rec_test_13735723133705110539.txt
 ]]></system-out>
   </testcase>
-  <testcase name="testDramaGenreRecommendations" classname="com.system.IntegrationTest.TopDown.TopDown_Level1_IntegrationTest" time="0.001">
-    <system-out><![CDATA[User Jane Doe likes these genres: [Drama, Crime]
+  <testcase name="testFileOverwriteBehavior" classname="com.system.BlackBoxTest.OutputWriterTest" time="0.005">
+    <system-out><![CDATA[Recommendations written to: C:\Users\genzoo\AppData\Local\Temp\rec_test_13735723133705110539.txt
+Recommendations written to: C:\Users\genzoo\AppData\Local\Temp\rec_test_13735723133705110539.txt
 ]]></system-out>
   </testcase>
-  <testcase name="testRecommendationEngineWithMockedParsing" classname="com.system.IntegrationTest.TopDown.TopDown_Level1_IntegrationTest" time="0.019">
-    <system-out><![CDATA[User John Smith likes these genres: [Action, Sci-Fi]
+  <testcase name="testEmptyUsersList" classname="com.system.BlackBoxTest.OutputWriterTest" time="0.006">
+    <system-out><![CDATA[Recommendations written to: C:\Users\genzoo\AppData\Local\Temp\rec_test_13735723133705110539.txt
 ]]></system-out>
   </testcase>
-  <testcase name="testDataFlowWithMockedLayers" classname="com.system.IntegrationTest.TopDown.TopDown_Level1_IntegrationTest" time="0.003">
-    <system-out><![CDATA[User John Smith likes these genres: [Action, Sci-Fi]
-User Jane Doe likes these genres: [Drama, Crime]
+  <testcase name="testNullUsersList_ThrowsException" classname="com.system.BlackBoxTest.OutputWriterTest" time="0.004"/>
+  <testcase name="testNullRecommendationEngine_ThrowsException" classname="com.system.BlackBoxTest.OutputWriterTest" time="0.003"/>
+  <testcase name="testNormalErrorMessage" classname="com.system.BlackBoxTest.OutputWriterTest" time="0.003">
+    <system-out><![CDATA[Error written to: C:\Users\genzoo\AppData\Local\Temp\rec_test_13735723133705110539.txt
 ]]></system-out>
   </testcase>
-  <testcase name="testNoMatchingGenres" classname="com.system.IntegrationTest.TopDown.TopDown_Level1_IntegrationTest" time="0.001">
-    <system-out><![CDATA[User Comedy Fan likes these genres: [Comedy]
+  <testcase name="multipleUsersScenario" classname="com.system.BlackBoxTest.OutputWriterTest" time="0.007">
+    <system-out><![CDATA[Recommendations written to: C:\Users\genzoo\AppData\Local\Temp\rec_test_13735723133705110539.txt
 ]]></system-out>
   </testcase>
+  <testcase name="testNullErrorMessage_ThrowsException" classname="com.system.BlackBoxTest.OutputWriterTest" time="0.003"/>
 </testsuite>

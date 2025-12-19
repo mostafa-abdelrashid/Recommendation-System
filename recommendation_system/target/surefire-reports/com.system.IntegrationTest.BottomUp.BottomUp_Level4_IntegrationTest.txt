@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.system.IntegrationTest.BottomUp.BottomUp_Level4_IntegrationTest
 -------------------------------------------------------------------------------
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.054 s -- in com.system.IntegrationTest.BottomUp.BottomUp_Level4_IntegrationTest
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.046 s -- in com.system.IntegrationTest.BottomUp.BottomUp_Level4_IntegrationTest
