@@ -26,7 +26,7 @@ public class MovieParserTest {
     public void testParseMovies_normal() throws Exception {
         tmpFile = Files.createTempFile("movies_normal", ".txt");
 
-        String content = "The Matrix,TM093\n" +
+        String content = "The Matrix,TM193\n" +
                 "Action, Sci-Fi\n" +
                 "Inception,I666\n" +
                 "Action, Thriller, Sci-Fi\n";
@@ -41,7 +41,7 @@ public class MovieParserTest {
 
         Movie m1 = movies.get(0);
         assertEquals("The Matrix", m1.getTitle());
-        assertEquals("TM093", m1.getMovieId());
+        assertEquals("TM193", m1.getMovieId());
         assertTrue(m1.getGenres().contains("Action"));
         assertTrue(m1.getGenres().contains("Sci-Fi"));
     }
@@ -72,18 +72,15 @@ public class MovieParserTest {
     public void testParseMovies_missingGenreLine() throws Exception {
         tmpFile = Files.createTempFile("movies_odd", ".txt");
 
-        String content = "Movie One,MO111\n" +
+        String content = "Frozen,F111\n" +
                 "Comedy\n" +
-                "Movie Two,MT222\n";
+                "Moana,M222\n";
 
         Files.writeString(tmpFile, content);
 
         Parsing.setMovieFile(tmpFile.toString());
 
-        ArrayList<Movie> movies = Parsing.parseMovies();
-
-        assertEquals(1, movies.size());
-        assertEquals("Movie One", movies.get(0).getTitle());
+        assertThrows(DataValidationException.class, () -> Parsing.parseMovies());
     }
 
     @Test
@@ -103,10 +100,10 @@ public class MovieParserTest {
     public void testParseMovies_blankLineBetweenMovies() throws Exception {
         tmpFile = Files.createTempFile("movies_blank", ".txt");
 
-        String content = "Movie One,MO111\n" +
+        String content = "Frozen,F111\n" +
                 "Action,Comedy\n" +
                 "\n" +
-                "Movie Two,MT222\n" +
+                "Moana,M222\n" +
                 "Drama,Thriller\n";
 
         Files.writeString(tmpFile, content);
@@ -115,11 +112,15 @@ public class MovieParserTest {
 
         ArrayList<Movie> movies = Parsing.parseMovies();
 
-        assertEquals(1, movies.size(), "Parser stops at blank line");
+        assertEquals(2, movies.size(), "Parser skips blank lines and parses both movies");
 
         Movie m1 = movies.get(0);
-        assertEquals("Movie One", m1.getTitle());
-        assertEquals("MO111", m1.getMovieId());
+        assertEquals("Frozen", m1.getTitle());
+        assertEquals("F111", m1.getMovieId());
+        
+        Movie m2 = movies.get(1);
+        assertEquals("Moana", m2.getTitle());
+        assertEquals("M222", m2.getMovieId());
     }
 
 }

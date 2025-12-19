@@ -1,0 +1,35 @@
+{
+  "java.configuration.updateBuildConfiguration": "disabled",
+  "java.autobuild.enabled": false,
+  "java.import.maven.enabled": false,
+  "java.import.gradle.enabled": false,
+  "java.project.importOnFirstTimeStartup": "disabled",
+  "java.project.importHint": false,
+  "java.compile.nullAnalysis.mode": "disabled",
+  "java.server.launchMode": "LightWeight",
+  "java.validation.enabled": false,
+  "java.recommendations.dependency.analytics.show": false,
+  "java.dependency.syncWithFolderExplorer": false,
+  "java.debug.settings.enableRunDebugCodeLens": false,
+  "java.test.defaultConfig": "",
+  "maven.executable.preferMavenWrapper": false,
+  "maven.terminal.useJavaHome": true,
+  "maven.pomfile.autoUpdateEffectivePOM": false,
+  "maven.view": "flat",
+  "maven.excludedFolders": ["**/node_modules/**", "**/target/**"],
+  "files.watcherExclude": {
+    "**/target/**": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true
+  },
+  "search.exclude": {
+    "**/target": true
+  },
+
+  "terminal.integrated.defaultProfile.windows": "Command Prompt",
+  "terminal.integrated.profiles.windows": {
+    "Command Prompt": {
+      "path": "C:\\\\Windows\\\\System32\\\\cmd.exe"
+    }
+  }
+}
