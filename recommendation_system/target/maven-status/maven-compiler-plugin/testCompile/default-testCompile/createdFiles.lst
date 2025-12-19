@@ -10,5 +10,6 @@ com\system\UnitTest\RecommendationEngineTest.class
 com\system\IntegrationTest\BottomUp\BottomUp_Level3_IntegrationTest.class
 com\system\IntegrationTest\BottomUp\BottomUp_Level1_IntegrationTest.class
 com\system\UnitTest\UserValidatorTest.class
+com\system\WhiteBoxTest\UserValidatorTest.class
 com\system\IntegrationTest\BottomUp\BottomUp_Level4_IntegrationTest.class
 com\system\UnitTest\UserParserTest.class
