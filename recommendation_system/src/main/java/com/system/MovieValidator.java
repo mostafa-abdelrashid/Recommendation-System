@@ -46,13 +46,13 @@ public class MovieValidator {
         try {
             numberSuffix = movie.getMovieId().substring(Prefix.length());
         } catch (IndexOutOfBoundsException e) {
-            throw new DataValidationException("ERROR: Movie Id {" + movie.getMovieId() + "} are wrong");
+            throw new DataValidationException("ERROR: Movie Id " + movie.getMovieId() + " are wrong");
         }
         if (numberSuffix.length() != 3 || !numberSuffix.matches("\\d{3}")) {
             throw new DataValidationException(
-                    "ERROR: Movie Id numbers " + movie.getMovieId() + " aren’t unique");
+                    "ERROR: Movie Id numbers " + movie.getMovieId() + " are wrong");
         }
-        if (!isMovieIdUnique(numberSuffix)) {
+        if (!isMovieIdUnique(movie.getMovieId())) {
             throw new DataValidationException(
                     "ERROR: Movie Id numbers " + movie.getMovieId() + " aren’t unique");
         }
