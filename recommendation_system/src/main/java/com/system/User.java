@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class User {
 private final String userName;
     private final String userId;
-    private final ArrayList<String> likedMovieIds; // Simple list structure
+    private final ArrayList<String> likedMovieIds;
 
     public User(String userName, String userId, ArrayList<String> likedMovieIds) {
         this.userName = userName;

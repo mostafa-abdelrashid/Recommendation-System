@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Movie {
     private final String title;
     private final String movieId;
-    private final ArrayList<String> genres; // Simple list structure
+    private final ArrayList<String> genres;
 
     public Movie(String title, String movieId, ArrayList<String> genres) {
         this.title = title;

@@ -23,7 +23,7 @@ public class RecommendationEngine {
                 allLikedGenres.addAll(likedMovie.getGenres());
             }
         }
-        System.out.println("User " + user.getUserName() + " likes these genres: " + allLikedGenres);
+
 
         for (Movie movie : allMovies) {
 

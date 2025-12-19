@@ -19,6 +19,26 @@ public class Parsing {
         userValidator = new UserValidator();
     }
 
+    private static boolean isMovieTitleLine(String line) {
+        String[] parts = line.split(",");
+        for (String part : parts) {
+            if (part.trim().matches("[A-Z]+\\d+")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isUserLine(String line) {
+        String[] parts = line.split(",");
+        for (String part : parts) {
+            if (part.trim().matches("\\d{8}[A-Za-z0-9]")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static ArrayList<Movie> parseMovies() throws DataValidationException {
         ArrayList<Movie> movies = new ArrayList<Movie>();
 
@@ -26,11 +46,29 @@ public class Parsing {
             String titleAndId;
             String genresLine;
 
-            while ((titleAndId = br.readLine()) != null &&
-                    (genresLine = br.readLine()) != null && !(titleAndId.trim().isEmpty())
-                    && !(genresLine.trim().isEmpty())) {
+            while ((titleAndId = br.readLine()) != null) {
+                if (titleAndId.trim().isEmpty()) {
+                    continue;
+                }
+                
+                genresLine = br.readLine();
+                while (genresLine != null && genresLine.trim().isEmpty()) {
+                    genresLine = br.readLine();
+                }
+
+                if (genresLine == null) {
+                    throw new DataValidationException("ERROR: Missing genre list for movie: " + titleAndId.trim());
+                }
+
+                if (isMovieTitleLine(genresLine)) {
+                    throw new DataValidationException("ERROR: Missing genre list for movie: " + titleAndId.trim());
+                }
 
                 String[] parts = titleAndId.split(",");
+                
+                if (parts.length < 2) {
+                    throw new DataValidationException("ERROR: Invalid movie format - missing comma");
+                }
 
                 String title = parts[0].trim();
                 String id = parts[1].trim();
@@ -60,11 +98,29 @@ public class Parsing {
             String nameAndId;
             String likedMoviesLine;
 
-            while ((nameAndId = br.readLine()) != null &&
-                    (likedMoviesLine = br.readLine()) != null && !(nameAndId.trim().isEmpty())
-                    && !(likedMoviesLine.trim().isEmpty())) {
+            while ((nameAndId = br.readLine()) != null) {
+                if (nameAndId.trim().isEmpty()) {
+                    continue;
+                }
+                
+                likedMoviesLine = br.readLine();
+                while (likedMoviesLine != null && likedMoviesLine.trim().isEmpty()) {
+                    likedMoviesLine = br.readLine();
+                }
+
+                if (likedMoviesLine == null) {
+                    throw new DataValidationException("ERROR: Missing liked movies list for user: " + nameAndId.trim());
+                }
+
+                if (isUserLine(likedMoviesLine)) {
+                    throw new DataValidationException("ERROR: Missing liked movies list for user: " + nameAndId.trim());
+                }
 
                 String[] parts = nameAndId.split(",");
+                
+                if (parts.length < 2) {
+                    throw new DataValidationException("ERROR: Invalid user format - missing comma");
+                }
 
                 String name = parts[0].trim();
                 String id = parts[1].trim();
