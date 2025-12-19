@@ -51,7 +51,7 @@ class OutputWriterTest {
 
 	@Test
 	void Single_user_Scenario() throws IOException {
-		user1 = new User("John Smith", "12345678A",new ArrayList<>(Arrays.asList("TM093")));
+		user1 = new User("John Smith", "12345678A",new ArrayList<>(Arrays.asList("TM193")));
 		
 		when(engine.getRecommendationsForUser(user1))
         .thenReturn(Arrays.asList("John Wick","Wanted"));
@@ -71,7 +71,7 @@ class OutputWriterTest {
 	
 	@Test
 	void Multiple_users_Scenario() throws IOException{
-		user1 = new User("John Smith", "12345678A",new ArrayList<>(Arrays.asList("TM093")));
+		user1 = new User("John Smith", "12345678A",new ArrayList<>(Arrays.asList("TM193")));
         user2 = new User("Alex Brown", "87654321B",new ArrayList<>(Arrays.asList("I666")));
         user3 = new User("Ahmed Hassan", "11223344C",new ArrayList<>());
         

@@ -29,7 +29,7 @@ public class UserParserTest {
 
         String content =
                 "Alice Johnson,12345678A\n" +
-                "TM093,I666\n" +
+                "TM193,I666\n" +
                 "Bob Smith,87654321B\n" +
                 "MO111,MT222\n";
 
@@ -44,7 +44,7 @@ public class UserParserTest {
         User u1 = users.get(0);
         assertEquals("Alice Johnson", u1.getUserName());
         assertEquals("12345678A", u1.getUserId());
-        assertTrue(u1.getLikedMovieIds().contains("TM093"));
+        assertTrue(u1.getLikedMovieIds().contains("TM193"));
         assertTrue(u1.getLikedMovieIds().contains("I666"));
     }
 
@@ -54,7 +54,7 @@ public class UserParserTest {
 
         String content =
                 "  Karim Ahmed  ,  12345678X  \n" +
-                "  TM093 ,  I666  \n";
+                "  TM193 ,  I666  \n";
 
         Files.writeString(tmpFile, content);
 
@@ -67,7 +67,7 @@ public class UserParserTest {
         User u = users.get(0);
         assertEquals("Karim Ahmed", u.getUserName());
         assertEquals("12345678X", u.getUserId());
-        assertTrue(u.getLikedMovieIds().contains("TM093"));
+        assertTrue(u.getLikedMovieIds().contains("TM193"));
         assertTrue(u.getLikedMovieIds().contains("I666"));
     }
 
@@ -77,15 +77,15 @@ public class UserParserTest {
 
         String content =
                 "BadLineWithoutComma\n" +
-                "TM093,I666\n" +
-                "Good User,12345678G\n" +
+                "TM193,I666\n" +
+                "David Miller,12345678G\n" +
                 "MO111\n";
 
         Files.writeString(tmpFile, content);
 
         Parsing.setUserFile(tmpFile.toString());
 
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> Parsing.parseUsers());
+        assertThrows(DataValidationException.class, () -> Parsing.parseUsers());
     }
 
     @Test
@@ -93,18 +93,15 @@ public class UserParserTest {
         tmpFile = Files.createTempFile("users_odd", ".txt");
 
         String content =
-                "User One,12345678A\n" +
-                "TM093\n" +
-                "User Two,87654321B\n"; 
+                "Emma Watson,12345678A\n" +
+                "TM193\n" +
+                "Chris Evans,87654321B\n"; 
 
         Files.writeString(tmpFile, content);
 
         Parsing.setUserFile(tmpFile.toString());
 
-        ArrayList<User> users = Parsing.parseUsers();
-
-        assertEquals(1, users.size());
-        assertEquals("User One", users.get(0).getUserName());
+        assertThrows(DataValidationException.class, () -> Parsing.parseUsers());
     }
 
     @Test
@@ -112,10 +109,10 @@ public class UserParserTest {
         tmpFile = Files.createTempFile("users_blank", ".txt");
 
         String content =
-                "User A,12345678A\n" +
-                "TM093,I666\n" +
+                "Tom Holland,12345678A\n" +
+                "TM193,I666\n" +
                 "\n" +                     
-                "User B,87654321B\n" +
+                "Zendaya Coleman,87654321B\n" +
                 "MO111,MT222\n";
 
         Files.writeString(tmpFile, content);
@@ -124,10 +121,13 @@ public class UserParserTest {
 
         ArrayList<User> users = Parsing.parseUsers();
 
-        assertEquals(1, users.size(), "Parser stops at blank line");
+        assertEquals(2, users.size(), "Parser skips blank lines and parses both users");
 
-        assertEquals("User A", users.get(0).getUserName());
+        assertEquals("Tom Holland", users.get(0).getUserName());
         assertEquals("12345678A", users.get(0).getUserId());
+        
+        assertEquals("Zendaya Coleman", users.get(1).getUserName());
+        assertEquals("87654321B", users.get(1).getUserId());
     }
 
     @Test
